@@ -1,0 +1,33 @@
+post_install() {
+  # Print to stderr to make it more likely pacman shows the message during install
+  cat >&2 <<'EOF'
+To run the service, consider enabling it for system boot:
+
+  sudo systemctl daemon-reload
+  sudo systemctl enable --now chattering_fix.service
+
+The service, as packaged, runs without any arguments and will attempt to auto-detect your keyboard.
+If you want to supply explicit options (keyboard id or threshold), create a systemd drop-in or edit
+/usr/lib/systemd/system/chattering_fix.service and change the ExecStart line.
+EOF
+  # Also write a short hint into /usr/share/doc so users can find it later
+  if [ -d "/usr/share/doc/${pkgname}" ]; then
+    printf "%s\n" "To enable the service: sudo systemctl daemon-reload && sudo systemctl enable --now chattering_fix.service" > "/usr/share/doc/${pkgname}/INSTALL_HINT"
+  fi
+}
+
+pre_remove() {
+  # If the service is enabled, disable & stop it on package removal to avoid leaving a running unit.
+  if command -v systemctl >/dev/null 2>&1; then
+    if systemctl is-enabled --quiet chattering_fix.service >/dev/null 2>&1; then
+      echo "Disabling and stopping chattering_fix.service..."
+      systemctl disable --now chattering_fix.service >/dev/null 2>&1 || true
+    fi
+  fi
+}
+
+post_upgrade() {
+  echo "chattering_fix package was upgraded. If you changed the systemd unit, run:"
+  echo "  sudo systemctl daemon-reload"
+  echo "  sudo systemctl restart chattering_fix.service"
+}

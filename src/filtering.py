@@ -41,6 +41,11 @@ def _from_keystroke(event: libevdev.InputEvent, threshold: int) -> bool:
             logging.info(f'FILTERING {event.code} up: key not pressed beforehand')
             return False
 
+    # If we get a down while we already consider the key pressed, treat it as a duplicate down (likely chatter) and filter it
+    if event.value == 1 and _key_pressed[event.code]:
+        logging.info(f'FILTERING {event.code} down: key already pressed (duplicate down)')
+        return False
+
     prev = _last_key_up.get(event.code)
     now = event.sec * 1E6 + event.usec
 

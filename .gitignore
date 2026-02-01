@@ -1,3 +1,77 @@
-__pycache__
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+pip-wheel-metadata/
+*.whl
+
+# Virtual environments
+venv/
+ENV/
+env/
+.env/
+.venv/
 /venv/
-.idea
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+
+# Type checkers
+.pyre/
+
+# Profiling
+.prof
+
+# Editors/IDE
+.idea/
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Packaging outputs and build artifacts
+pkg/
+*.pkg.tar.zst
+
+# Logs and temporary files
+*.log
+*.pyc
+*~
+
+# Other
+.env.local
+KeyboardChatteringFix-Linux/
